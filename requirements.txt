@@ -1,0 +1,4 @@
+requests==2.25.1
+python_kucoin==2.1.3
+pandas==1.2.4
+kucoin==0.1
