@@ -53,7 +53,7 @@ def get_orders():
     # Send a message if there are orders
     if not orders.empty:
         for _, row in orders.iterrows():
-            send_alert(f"Sold {(row['symbol'])} for {(row['price'])} $")
+            send_alert(f"Sold {(row['symbol'])} for ${(row['price'])}")
 
     # Start threading
     threading.Timer(60.0, get_orders).start()
