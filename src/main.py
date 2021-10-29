@@ -1,5 +1,4 @@
 # Standard libraries
-from re import I
 import threading
 from datetime import datetime, timedelta
 import requests
@@ -7,7 +6,6 @@ import requests
 # 3rd party dependencies
 import pandas as pd  # For parsing data
 from kucoin.client import Client
-from kucoin.asyncio import KucoinSocketManager
 
 # Local dependencies
 from kucoin_keys import api_key, api_secret, api_passphrase, bot_token, send_to
@@ -60,4 +58,5 @@ def get_orders():
 
 
 if __name__ == "__main__":
+    print("Starting...")
     get_orders()
