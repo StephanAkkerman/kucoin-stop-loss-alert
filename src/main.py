@@ -42,17 +42,21 @@ def get_orders():
     time = datetime.utcnow() - timedelta(seconds=60)
 
     # Get orders that happened during this interval
-    orders = pd.DataFrame(client.get_orders()["items"])
-    orders["createdAt"] = pd.to_datetime(orders["createdAt"], unit="ms")
-    orders = orders.loc[
-        (orders["stopTriggered"] == True) & (orders["createdAt"] > time)
-    ]
+    try:
+        orders = pd.DataFrame(client.get_orders()["items"])
+        orders["createdAt"] = pd.to_datetime(orders["createdAt"], unit="ms")
+        orders = orders.loc[
+            (orders["stopTriggered"] == True) & (orders["createdAt"] > time)
+        ]
 
-    # Send a message if there are orders
-    if not orders.empty:
-        for _, row in orders.iterrows():
-            send_alert(f"Sold {(row['symbol'])} for ${(row['price'])}")
-
+        # Send a message if there are orders
+        if not orders.empty:
+            for _, row in orders.iterrows():
+                send_alert(f"Sold {(row['symbol'])} for ${(row['price'])}")
+    except Exception as e:
+        print(e)
+        print(f"Error in get_orders at {datetime.now()}")
+        
     # Start threading
     threading.Timer(60.0, get_orders).start()
 
